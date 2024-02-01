@@ -1,4 +1,4 @@
-FROM alpine/git AS git
+FROM alpine/git AS base
 
 ARG TAG=latest
 RUN git clone https://github.com/InBrowserApp/tldr.inbrowser.app.git && \
@@ -9,7 +9,7 @@ RUN git clone https://github.com/InBrowserApp/tldr.inbrowser.app.git && \
 FROM node:alpine AS build
 
 WORKDIR /tldr.inbrowser.app
-COPY --from=git /git/tldr.inbrowser.app .
+COPY --from=base /git/tldr.inbrowser.app .
 RUN npm install --global pnpm && \
     pnpm install && \
     pnpm run build
