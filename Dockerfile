@@ -5,7 +5,7 @@ RUN apk add --no-cache git && \
     git clone https://github.com/InBrowserApp/tldr.inbrowser.app.git && \
     cd tldr.inbrowser.app && \
     ([[ "$TAG" = "latest" ]] || git checkout ${TAG}) && \
-    npm install -g pnpm && \
+    npm install --global pnpm && \
     pnpm install && \
     pnpm run build
 
