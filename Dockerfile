@@ -1,11 +1,16 @@
-FROM node:alpine AS build
+FROM alpine/git AS base
 
 ARG TAG=latest
-RUN apk add --no-cache git && \
-    git clone https://github.com/InBrowserApp/tldr.inbrowser.app.git && \
+RUN git clone https://github.com/InBrowserApp/tldr.inbrowser.app.git && \
     cd tldr.inbrowser.app && \
     ([[ "$TAG" = "latest" ]] || git checkout ${TAG}) && \
-    npm install --global pnpm && \
+    rm -rf .git
+
+FROM node:alpine AS build
+
+WORKDIR /tldr.inbrowser.app
+COPY --from=build /git/tldr.inbrowser.app .
+RUN npm install --global pnpm && \
     pnpm install && \
     pnpm run build
 
