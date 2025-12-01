@@ -10,7 +10,7 @@ FROM node:alpine AS build
 
 WORKDIR /tldr.inbrowser.app
 COPY --from=base /git/tldr.inbrowser.app .
-RUN npm install --global pnpm && \
+RUN npm install --global pnpm@9 && \
     pnpm install --frozen-lockfile && \
     pnpm build
 
