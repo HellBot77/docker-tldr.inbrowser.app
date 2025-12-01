@@ -11,10 +11,9 @@ FROM node:alpine AS build
 WORKDIR /tldr.inbrowser.app
 COPY --from=base /git/tldr.inbrowser.app .
 RUN npm install --global pnpm && \
-    pnpm install && \
+    pnpm install --frozen-lockfile && \
     pnpm build
 
-FROM lipanski/docker-static-website
+FROM joseluisq/static-web-server
 
-COPY --from=build /tldr.inbrowser.app/dist .
-
+COPY --from=build /tldr.inbrowser.app/dist ./public
