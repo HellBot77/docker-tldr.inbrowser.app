@@ -3,7 +3,7 @@ FROM alpine/git AS base
 ARG TAG=latest
 RUN git clone https://github.com/InBrowserApp/tldr.inbrowser.app.git && \
     cd tldr.inbrowser.app && \
-    ([[ "$TAG" = "latest" ]] || git checkout ${TAG}) && \
+    # ([[ "$TAG" = "latest" ]] || git checkout ${TAG}) && \
     rm -rf .git
 
 FROM --platform=$BUILDPLATFORM node:alpine AS build
